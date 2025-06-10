@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-black leading-tight">
             {{ __('Edit Product') }}
         </h2>
     </x-slot>
@@ -43,6 +43,15 @@
                             <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" rows="4">{{ old('description', $product->description) }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
                         </div>
+
+
+                        @if($product->image)
+                            <div class="mb-6">
+                                <x-input-label for="current_image" :value="__('Current Image')" />
+                                <img src="{{ Storage::disk('public')->url($product->image) }}" alt="{{ $product->image }}" class="mt-1 block w-full max-w-xs">
+                                <x-input-error class="mt-2" :messages="$errors->get('current_image')" />
+                            </div>
+                        @endif
 
                         <div class="mb-6">
                             <x-input-label for="image" :value="__('Image')" />

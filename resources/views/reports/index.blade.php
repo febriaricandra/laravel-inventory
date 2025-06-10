@@ -41,6 +41,21 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('reports.datatables') }}",
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 
+                'csv', 
+                'excel', 
+                'pdf', 
+                'print',
+                {
+                    text: 'Refresh',
+                    className: 'btn btn-primary',
+                    action: function (e, dt, node, config) {
+                        dt.ajax.reload();
+                    }
+                }
+            ],
             columns: [
                 {
                     data: 'transaction_date', 

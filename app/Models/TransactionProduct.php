@@ -20,8 +20,7 @@ class TransactionProduct extends Model
      * @var array
      */
     protected $casts = [
-        'transaction_date' => 'datetime',
-        'created_at' => 'datetime',
+        'created_at' => 'date',
         'updated_at' => 'datetime',
         'type' => 'string',
     ];
