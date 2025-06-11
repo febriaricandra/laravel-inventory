@@ -61,7 +61,7 @@ class TransactionProduct extends Model
 
     public function datatables()
     {
-        return DataTables::of(self::query())
+        return DataTables::of(self::query()->with(['product', 'supplier', 'user']))
             ->addColumn('product', function ($transactionProduct) {
                 return $transactionProduct->product ? $transactionProduct->product->name : '-';
             })

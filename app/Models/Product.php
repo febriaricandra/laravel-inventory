@@ -49,7 +49,7 @@ class Product extends Model
     {
         $activeUser = auth()->user();
 
-        return DataTables::of(self::query())
+        return DataTables::of(self::query()->with('categories'))
             ->addColumn('categories', function ($product) {
                 return $product->categories ? $product->categories->name : '-';
             })

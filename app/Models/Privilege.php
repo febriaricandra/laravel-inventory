@@ -13,7 +13,7 @@ class Privilege extends Role
     {
         $activeUser = auth()->user();
 
-        return DataTables::of(self::query())
+        return DataTables::of(self::query()->with('permissions'))
             ->addColumn('permissions', function (Role $role) {
                 return $role->permissions->pluck('name')->implode(', ');
             })
