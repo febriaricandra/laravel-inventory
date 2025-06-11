@@ -10,9 +10,11 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
+                        @if(auth()->user()->can('roles.create'))
                         <x-primary-button onclick="createRole()">
                             {{ __('Add Role') }}
                         </x-primary-button>
+                        @endif
                     </div>
                     <table id="roles-table" class="min-w-full divide-y divide-gray-200">
                         <thead>

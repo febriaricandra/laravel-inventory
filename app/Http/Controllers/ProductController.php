@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\FileProcessingTrait;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Product;
 use App\Models\Category;
-use App\FileProcessingTrait;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     use FileProcessingTrait;
+
+    protected $resource = 'products';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('products.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
     {
-        return (new Product())->datatables();
+        return (new Product)->datatables();
     }
 
     /**
@@ -32,7 +35,8 @@ class ProductController extends Controller
     {
         //
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+
+        return view("{$this->resource}.create", compact('categories'));
     }
 
     /**
@@ -41,21 +45,23 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validatedData = $request->validated();
-        
+
         if ($request->hasFile('image')) {
             $filename = $this->uploadFile($request->file('image'), 'products');
             $validatedData['image'] = $filename;
         }
-        
+
         Product::create($validatedData);
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+
+        return redirect()->route("{$this->resource}.index")->with('success', 'Product created successfully.');
     }
+
     /**
      * Display the specified resource.
      */
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        return view("{$this->resource}.show", compact('product'));
     }
 
     /**
@@ -64,7 +70,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+
+        return view("{$this->resource}.edit", compact('product', 'categories'));
     }
 
     /**
@@ -83,7 +90,8 @@ class ProductController extends Controller
             $validatedData['image'] = $filename;
         }
         $product->update($validatedData);
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+
+        return redirect()->route("{$this->resource}.index")->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -96,6 +104,7 @@ class ProductController extends Controller
             $this->deleteFile($product->image, 'products');
         }
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+
+        return redirect()->route("{$this->resource}.index")->with('success', 'Product deleted successfully.');
     }
 }

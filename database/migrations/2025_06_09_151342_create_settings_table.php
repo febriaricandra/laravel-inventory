@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('configKey',255);
+            $table->string('configKey', 255);
             $table->longText('configValue');
             $table->string('name')->nullable();
             $table->string('path', 150)->nullable();
@@ -22,7 +22,6 @@ return new class extends Migration
     }
 
     /**
-     * 
      * Reverse the migrations.
      */
     public function down(): void

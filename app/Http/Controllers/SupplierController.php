@@ -16,10 +16,10 @@ class SupplierController extends Controller
         //
         return view('suppliers.index');
     }
-    
+
     public function useDatatables()
     {
-        return (new Supplier())->datatables();
+        return (new Supplier)->datatables();
     }
 
     /**
@@ -39,6 +39,7 @@ class SupplierController extends Controller
         // Validate and store the supplier data
         $validatedData = $request->validated();
         $supplier = Supplier::create($validatedData);
+
         return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully.');
     }
 
@@ -65,6 +66,7 @@ class SupplierController extends Controller
     {
         // Update the supplier with the validated data
         $supplier->update($request->validated());
+
         return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
     }
 
@@ -74,6 +76,7 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();
+
         return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
     }
 }

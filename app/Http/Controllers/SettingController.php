@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSettingRequest;
-use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -20,7 +19,7 @@ class SettingController extends Controller
 
     public function useDatatables()
     {
-        return (new Setting())->datatables();
+        return (new Setting)->datatables();
     }
 
     /**
@@ -54,6 +53,7 @@ class SettingController extends Controller
     {
         //
         $settings = $setting;
+
         return view('settings.edit', compact('settings'));
     }
 
@@ -69,6 +69,7 @@ class SettingController extends Controller
             'path' => 'nullable|string|max:255',
         ]);
         $setting->update($request->only(['configKey', 'configValue', 'name', 'path']));
+
         return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
     }
 

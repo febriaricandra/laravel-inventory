@@ -19,14 +19,16 @@ class CategoryController extends Controller
 
     public function useDatatables()
     {
-        return (new Category())->datatables();
+        return (new Category)->datatables();
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $categories = Category::all();
+
         return view('categories.create', compact('categories'));
     }
 
@@ -36,6 +38,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         Category::create($request->validated());
+
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
@@ -62,6 +65,7 @@ class CategoryController extends Controller
     {
         // Add logic to update the category
         $category->update($request->validated());
+
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
@@ -71,6 +75,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

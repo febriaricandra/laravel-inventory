@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Product;
-use App\Models\Supplier;
-use App\Models\User;
 
 class TransactionProduct extends Model
 {
@@ -36,7 +33,7 @@ class TransactionProduct extends Model
         static::creating(function ($transactionProduct) {
             $transactionProduct->type = $transactionProduct->type ?: 'in'; // Ensure type is set
 
-            if (!$transactionProduct->user_id) {
+            if (! $transactionProduct->user_id) {
                 $transactionProduct->user_id = auth()->id(); // Set user_id to the authenticated user
             }
         });

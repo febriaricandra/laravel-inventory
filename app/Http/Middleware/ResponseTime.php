@@ -16,14 +16,14 @@ class ResponseTime
     public function handle(Request $request, Closure $next): Response
     {
         $start = microtime(true);
-        
+
         $response = $next($request);
-        
+
         $end = microtime(true);
         $responseTime = ($end - $start) * 1000; // Convert to milliseconds
-        
-        $response->headers->set('X-Response-Time', $responseTime . 'ms');
-        
+
+        $response->headers->set('X-Response-Time', $responseTime.'ms');
+
         return $response;
     }
 }

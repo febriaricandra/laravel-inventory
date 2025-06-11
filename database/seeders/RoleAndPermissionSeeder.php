@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
-use App\Models\User;
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -19,7 +17,6 @@ class RoleAndPermissionSeeder extends Seeder
     {
         //
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        
 
         $adminRole = Role::create(['name' => 'admin']);
         $userRole = Role::create(['name' => 'staff']);
@@ -41,8 +38,8 @@ class RoleAndPermissionSeeder extends Seeder
             'suppliers' => ['view', 'create'],
         ];
 
-        foreach($adminActions as $resource => $actions) {
-            foreach($actions as $action) {
+        foreach ($adminActions as $resource => $actions) {
+            foreach ($actions as $action) {
                 Permission::firstOrCreate(['name' => "{$resource}.{$action}", 'guard_name' => 'web']);
             }
         }
@@ -59,7 +56,7 @@ class RoleAndPermissionSeeder extends Seeder
             'categories.delete',
             'reports.view',
             'suppliers.view',
-            'suppliers.create'  
+            'suppliers.create',
         ]);
 
         // create a default admin user

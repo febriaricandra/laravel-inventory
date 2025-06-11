@@ -9,9 +9,11 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
+                        @if(auth()->user()->can('suppliers.create'))
                         <x-primary-button onclick="createSuppliers()">
                             {{ __('Add Supplier') }}
                         </x-primary-button>
+                        @endif
                     </div>
 
                     <table id="suppliers-table" class="min-w-full divide-y divide-gray-200">

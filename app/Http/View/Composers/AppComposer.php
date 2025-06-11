@@ -2,26 +2,20 @@
 
 namespace App\Http\View\Composers;
 
-use Illuminate\View\View;
-use App\Models\Supplier;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\TransactionProduct;
 use App\Models\Setting;
+use Illuminate\View\View;
 
 class AppComposer
 {
     /**
      * Bind data to the view.
      *
-     * @param View $view
      * @return void
      */
     public function compose(View $view)
     {
         $view->with($this->bindToView());
     }
-
 
     protected function bindToView()
     {
@@ -39,17 +33,18 @@ class AppComposer
         return compact('user', 'resources', 'setting');
     }
 
-
     protected function getResources($user)
     {
         return $user->getAllPermissions()
             ->pluck('name')
             ->reject(function ($name) {
-                list(, $action) = explode('.', $name);
+                [, $action] = explode('.', $name);
+
                 return $action !== 'view';
             })
             ->map(function ($name) {
-                list($resource) = explode('.', $name);
+                [$resource] = explode('.', $name);
+
                 return $resource;
             })
             ->values()

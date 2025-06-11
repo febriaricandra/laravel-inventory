@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/suppliers/datatables', [SupplierController::class, 'useDatatables'])->name('suppliers.datatables');
     Route::resource('suppliers', SupplierController::class);
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
 });
 
 require __DIR__.'/auth.php';

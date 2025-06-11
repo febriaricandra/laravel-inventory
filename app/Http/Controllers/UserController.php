@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function useDatatables()
     {
-        return (new User())->datatables();
+        return (new User)->datatables();
     }
 
     /**
@@ -29,6 +29,7 @@ class UserController extends Controller
     {
         //
         $roles = Role::all();
+
         return view('users.create', compact('roles'));
     }
 
@@ -41,6 +42,7 @@ class UserController extends Controller
         $validatedData = $request->validated();
         $user = User::create($validatedData);
         $user->assignRole($request->input('role'));
+
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -59,6 +61,7 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         $roles = Role::all();
+
         return view('users.edit', compact('users', 'roles'));
     }
 
@@ -73,6 +76,7 @@ class UserController extends Controller
         if ($request->has('role')) {
             $user->syncRoles($request->input('role'));
         }
+
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
@@ -82,6 +86,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

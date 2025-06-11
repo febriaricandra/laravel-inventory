@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\Privilege;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -16,18 +16,20 @@ class RoleController extends Controller
 
     public function useDatatables()
     {
-        return (new Privilege())->datatables();
+        return (new Privilege)->datatables();
     }
 
     public function show(Role $role)
     {
         $permissions = $role->permissions;
+
         return view('roles.show', compact('role', 'permissions'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
+
         return view('roles.create', compact('permissions'));
     }
 
@@ -35,7 +37,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles,name',
-            'permissions' => 'required|array'
+            'permissions' => 'required|array',
         ]);
 
         $role = Role::create(['name' => $request->name]);
@@ -47,14 +49,15 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
+
         return view('roles.edit', compact('role', 'permissions'));
     }
 
     public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name' => 'required|unique:roles,name,' . $role->id,
-            'permissions' => 'required|array'
+            'name' => 'required|unique:roles,name,'.$role->id,
+            'permissions' => 'required|array',
         ]);
 
         $role->update(['name' => $request->name]);
@@ -66,6 +69,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
+
         return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
     }
 }

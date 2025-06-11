@@ -27,7 +27,7 @@ class StoreTransactionProductRequest extends FormRequest
             'supplier_id' => 'nullable|exists:suppliers,id',
             'quantity' => 'required|integer|min:1',
             'type' => 'required|in:in,out', // Ensure type is either 'in' or 'out'
-            'description' => 'nullable|string|max:255', 
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

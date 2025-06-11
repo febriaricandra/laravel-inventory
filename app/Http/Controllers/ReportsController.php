@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionProductRequest;
 use App\Http\Requests\UpdateTransactionProductRequest;
-use App\Models\TransactionProduct;
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
+use App\Models\TransactionProduct;
 
 class ReportsController extends Controller
 {
@@ -23,7 +22,7 @@ class ReportsController extends Controller
 
     public function useDatatables()
     {
-        return (new TransactionProduct())->datatables();
+        return (new TransactionProduct)->datatables();
     }
 
     /**
@@ -32,10 +31,11 @@ class ReportsController extends Controller
     public function create()
     {
         //
-        //supplier, product, categories
+        // supplier, product, categories
         $products = Product::all();
         $categories = Category::all();
         $suppliers = Supplier::all();
+
         return view('reports.create', compact('products', 'categories', 'suppliers'));
     }
 
@@ -45,6 +45,7 @@ class ReportsController extends Controller
     public function store(StoreTransactionProductRequest $request)
     {
         TransactionProduct::create($request->validated());
+
         return redirect()->route('reports.index')->with('success', 'Transaction Product created successfully.');
     }
 
@@ -70,6 +71,7 @@ class ReportsController extends Controller
     public function update(UpdateTransactionProductRequest $request, TransactionProduct $transactionProduct)
     {
         $transactionProduct->update($request->validated());
+
         return redirect()->route('reports.index')->with('success', 'Transaction Product updated successfully.');
     }
 
@@ -79,6 +81,7 @@ class ReportsController extends Controller
     public function destroy(TransactionProduct $transactionProduct)
     {
         $transactionProduct->delete();
+
         return redirect()->route('reports.index')->with('success', 'Transaction Product deleted successfully.');
     }
 }

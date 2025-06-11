@@ -10,9 +10,11 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
+                        @if(auth()->user()->can('products.create'))
                         <x-primary-button onclick="createProduct()">
                             {{ __('Add Product') }}
                         </x-primary-button>
+                        @endif
                     </div>
 
                     <table id="products-table" class="min-w-full divide-y divide-gray-200">
@@ -22,6 +24,7 @@
                                 <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Category</th>
                                 <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Image</th>
                                 <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Price</th>
+                                <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Stock</th>
                                 <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
@@ -45,6 +48,7 @@
                 {data: 'categories', name: 'categories', orderable: true, searchable: true},
                 {data: 'image', name: 'image', orderable: false, searchable: false},
                 {data: 'price', name: 'price'},
+                {data: 'stock', name: 'stock'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ]
         });

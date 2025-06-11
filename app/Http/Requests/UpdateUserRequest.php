@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
         ];
 
         if ($this->email && $this->email !== $this->user()->email) {
-            $rules['email'] = 'required|email|max:255|unique:users,email,' . $this->user()->id;
+            $rules['email'] = 'required|email|max:255|unique:users,email,'.$this->user()->id;
         }
 
         return $rules;
