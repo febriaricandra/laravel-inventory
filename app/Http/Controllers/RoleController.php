@@ -9,9 +9,11 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    protected $resource = 'roles';
+
     public function index()
     {
-        return view('roles.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -23,14 +25,14 @@ class RoleController extends Controller
     {
         $permissions = $role->permissions;
 
-        return view('roles.show', compact('role', 'permissions'));
+        return view("{$this->resource}.show", compact('role', 'permissions'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
 
-        return view('roles.create', compact('permissions'));
+        return view("{$this->resource}.create", compact('permissions'));
     }
 
     public function store(Request $request)
@@ -43,14 +45,14 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->name]);
         $role->syncPermissions($request->permissions);
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Role created successfully');
     }
 
     public function edit(Role $role)
     {
         $permissions = Permission::all();
 
-        return view('roles.edit', compact('role', 'permissions'));
+        return view("{$this->resource}.edit", compact('role', 'permissions'));
     }
 
     public function update(Request $request, Role $role)
@@ -63,13 +65,13 @@ class RoleController extends Controller
         $role->update(['name' => $request->name]);
         $role->syncPermissions($request->permissions);
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Role updated successfully');
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Role deleted successfully');
     }
 }

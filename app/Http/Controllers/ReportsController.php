@@ -11,13 +11,15 @@ use App\Models\TransactionProduct;
 
 class ReportsController extends Controller
 {
+    protected $resource = 'reports';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        return view('reports.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -36,7 +38,7 @@ class ReportsController extends Controller
         $categories = Category::all();
         $suppliers = Supplier::all();
 
-        return view('reports.create', compact('products', 'categories', 'suppliers'));
+        return view("{$this->resource}.create", compact('products', 'categories', 'suppliers'));
     }
 
     /**
@@ -46,7 +48,7 @@ class ReportsController extends Controller
     {
         TransactionProduct::create($request->validated());
 
-        return redirect()->route('reports.index')->with('success', 'Transaction Product created successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Transaction Product created successfully.');
     }
 
     /**
@@ -54,7 +56,7 @@ class ReportsController extends Controller
      */
     public function show(TransactionProduct $transactionProduct)
     {
-        return view('reports.show', compact('transactionProduct'));
+        return view("{$this->resource}.show", compact('transactionProduct'));
     }
 
     /**
@@ -62,7 +64,7 @@ class ReportsController extends Controller
      */
     public function edit(TransactionProduct $transactionProduct)
     {
-        return view('reports.edit', compact('transactionProduct'));
+        return view("{$this->resource}.edit", compact('transactionProduct'));
     }
 
     /**
@@ -72,7 +74,7 @@ class ReportsController extends Controller
     {
         $transactionProduct->update($request->validated());
 
-        return redirect()->route('reports.index')->with('success', 'Transaction Product updated successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Transaction Product updated successfully.');
     }
 
     /**
@@ -82,6 +84,6 @@ class ReportsController extends Controller
     {
         $transactionProduct->delete();
 
-        return redirect()->route('reports.index')->with('success', 'Transaction Product deleted successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Transaction Product deleted successfully.');
     }
 }

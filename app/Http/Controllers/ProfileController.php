@@ -11,12 +11,14 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    protected $resource = 'profile';
+
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view("{$this->resource}.edit", [
             'user' => $request->user(),
         ]);
     }

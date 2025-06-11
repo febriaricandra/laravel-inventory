@@ -8,13 +8,15 @@ use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
+    protected $resource = 'suppliers';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        return view('suppliers.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -28,7 +30,7 @@ class SupplierController extends Controller
     public function create()
     {
         //
-        return view('suppliers.create');
+        return view("{$this->resource}.create");
     }
 
     /**
@@ -40,7 +42,7 @@ class SupplierController extends Controller
         $validatedData = $request->validated();
         $supplier = Supplier::create($validatedData);
 
-        return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Supplier created successfully.');
     }
 
     /**
@@ -48,7 +50,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        return view('suppliers.show', compact('supplier'));
+        return view("{$this->resource}.show", compact('supplier'));
     }
 
     /**
@@ -56,7 +58,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        return view('suppliers.edit', compact('supplier'));
+        return view("{$this->resource}.edit", compact('supplier'));
     }
 
     /**
@@ -67,7 +69,7 @@ class SupplierController extends Controller
         // Update the supplier with the validated data
         $supplier->update($request->validated());
 
-        return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Supplier updated successfully.');
     }
 
     /**
@@ -77,6 +79,6 @@ class SupplierController extends Controller
     {
         $supplier->delete();
 
-        return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Supplier deleted successfully.');
     }
 }

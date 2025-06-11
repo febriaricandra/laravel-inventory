@@ -10,6 +10,8 @@ class Product extends Model
     //
     protected $guarded = ['id'];
 
+    protected $appends = ['stock'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -37,11 +39,10 @@ class Product extends Model
 
     public function getStockAttribute()
     {
-        $stock = $this->transactions()
-            ->where('type', 'in')
-            ->sum('quantity');
-
-        return $stock > 0 ? $stock : 0;
+        return $this->transactions()
+            ->selectRaw('SUM(CASE WHEN type = "in" THEN quantity ELSE -quantity END) as total_stock')
+            ->first()
+            ->total_stock ?? 0;
     }
 
     public static function datatables()
@@ -55,9 +56,6 @@ class Product extends Model
             ->addColumn('image', function ($product) {
                 // Remove 'public' from the path since it's already handled by the storage:link
                 return $product->image ? '<img src="'.asset('storage/products/'.$product->image).'" alt="'.$product->name.'" class="w-16 h-16 object-cover">' : '-';
-            })
-            ->addColumn('stock', function ($product) {
-                return $product->stock;
             })
             ->addColumn('actions', function ($product) use ($activeUser) {
                 $actionbtn = '';

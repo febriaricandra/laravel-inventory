@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    protected $resource = 'settings';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        return view('settings.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -54,7 +56,7 @@ class SettingController extends Controller
         //
         $settings = $setting;
 
-        return view('settings.edit', compact('settings'));
+        return view("{$this->resource}.edit", compact('settings'));
     }
 
     /**
@@ -70,7 +72,7 @@ class SettingController extends Controller
         ]);
         $setting->update($request->only(['configKey', 'configValue', 'name', 'path']));
 
-        return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Setting updated successfully.');
     }
 
     /**

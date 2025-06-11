@@ -8,13 +8,14 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    protected $resource = 'categories';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // dd($this->useDatatables());
-        return view('categories.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -29,7 +30,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return view('categories.create', compact('categories'));
+        return view("{$this->resource}.create", compact('categories'));
     }
 
     /**
@@ -39,7 +40,7 @@ class CategoryController extends Controller
     {
         Category::create($request->validated());
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Category created successfully.');
     }
 
     /**
@@ -47,7 +48,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('categories.show', compact('category'));
+        return view("{$this->resource}.show", compact('category'));
     }
 
     /**
@@ -55,7 +56,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view("{$this->resource}.edit", compact('category'));
     }
 
     /**
@@ -66,7 +67,7 @@ class CategoryController extends Controller
         // Add logic to update the category
         $category->update($request->validated());
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -76,6 +77,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'Category deleted successfully.');
     }
 }

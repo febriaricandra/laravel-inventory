@@ -9,12 +9,14 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    protected $resource = 'users';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('users.index');
+        return view("{$this->resource}.index");
     }
 
     public function useDatatables()
@@ -30,7 +32,7 @@ class UserController extends Controller
         //
         $roles = Role::all();
 
-        return view('users.create', compact('roles'));
+        return view("{$this->resource}.create", compact('roles'));
     }
 
     /**
@@ -43,7 +45,7 @@ class UserController extends Controller
         $user = User::create($validatedData);
         $user->assignRole($request->input('role'));
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'User created successfully.');
     }
 
     /**
@@ -51,7 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view("{$this->resource}.show", compact('user'));
     }
 
     /**
@@ -62,7 +64,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $roles = Role::all();
 
-        return view('users.edit', compact('users', 'roles'));
+        return view("{$this->resource}.edit", compact('users', 'roles'));
     }
 
     /**
@@ -77,7 +79,7 @@ class UserController extends Controller
             $user->syncRoles($request->input('role'));
         }
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'User updated successfully.');
     }
 
     /**
@@ -87,6 +89,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route("{$this->resource}.index")->with('success', 'User deleted successfully.');
     }
 }
