@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Hash;
  *     title="Laravel Procurement API",
  *     version="1.0.0"
  * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
  */
 class AuthController extends Controller
 {
@@ -135,6 +142,11 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successfully logged out',
         ]);
+    }
+
+    public function me()
+    {
+        return response()->json(Auth::user());
     }
 
     protected function respondWithToken($token)
