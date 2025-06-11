@@ -18,8 +18,8 @@ class RoleAndPermissionSeeder extends Seeder
         //
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'staff']);
+        $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'web']);
+        $userRole = Role::create(['name' => 'staff', 'guard_name' => 'web']);
 
         $adminActions = [
             'users' => ['view', 'create', 'edit', 'delete'],
