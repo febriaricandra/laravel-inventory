@@ -9,7 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class BaseController extends Controller
 {
     use AuthorizesRequests, ValidatesRequests;
-    
+
     protected function sendResponse($result, $message, $code = 200)
     {
         $response = [
